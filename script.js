@@ -1,6 +1,9 @@
 var _SYSTEM_PATHS = ["C:/Windows/System32/kernel32.dll", "/var/www/html/cine-os/", "https://cine-os.local/api/v1/auth"];
 var _devBuildVer = "3.0.1";
 
+var CDN_COVER = "https://cdn.jsdelivr.net/gh/AlexBoops/CineOS@main/";
+window.CDN_COVER = CDN_COVER;
+
 var APPS = {
     'cine': {title: 'CINE // HUB', path: 'script/Apps/Cine/index.html', icon: 'https://cdn.worldvectorlogo.com/logos/netflix-logo-icon.svg', pinned: true},
     'term': {title: 'Spotify', path: 'script/Apps/Spotify/index.html', icon: 'https://cdn.pixabay.com/photo/2016/10/22/00/15/spotify-1759471_1280.jpg', pinned: true},
@@ -16,9 +19,9 @@ var APPS = {
     'Geforce': {title: 'GEFORCE NOW', path: 'script/Apps/Geforce/index.html', icon: 'https://play-lh.googleusercontent.com/_-b_HQXrVyyhZSHj_BoE9u_-cxkcHDH_yLX5rDjJsFMIfsCNQs9F3QP4JvEFcWaSIz0=w240-h480-rw', pinned: false},
     'Fortnite': {title: 'Fortnite', path: 'script/Apps/Fortnite/index.html', icon: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShiXrQ-cvZeDyQNPIZCv_hsaUCAe5j_rXJ7Q&s', pinned: false},
     'RocketL': {title: 'Rocket League', path: 'script/Apps/RocketL/index.html', icon: 'https://ygo-assets-entities-us.yougov.net/87bb7a16-2b62-11e8-82b1-37bb0d207ced.jpg?zcw=518&zch=518&zct=10&zcl=0', pinned: false},
-    'Xbox': {title: 'Xbox', path: 'script/Apps/Xbox/index.html', icon: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRknRQh-WRK4F75YB3EAlfrsqAk66Xjn45sBg&s', pinned: false},
+    'Xbox': {title: 'Xbox', path: 'script/Apps/Xbox/index.html', icon: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRknRQh-WRK4F75YB3EAlfrsqAk66Xjn45sBg&s', pinned: false}
 };
-const CDN_COVER = "https://cdn.jsdelivr.net/gh/AlexBoops/CineOS@main/";
+
 var savedPins = localStorage.getItem('c_pins_v2');
 if(savedPins) {
     let p = JSON.parse(savedPins);
@@ -193,7 +196,7 @@ function openDockCtx(e, id) {
 
 function openDrawerCtx(e, id) {
     e.preventDefault(); 
-  e.stopPropagation();
+    e.stopPropagation();
     hideAllCtx();
     activeCtxId = id;
     let m = document.getElementById('drawer-ctx-menu');
@@ -211,7 +214,7 @@ document.getElementById('ctx-pin-app').onclick = function() {
         renderUI();
     }
     hideAllCtx();
-}
+};
 
 document.getElementById('ctx-unpin-app').onclick = function() {
     if(activeCtxId && APPS[activeCtxId]) {
@@ -220,7 +223,7 @@ document.getElementById('ctx-unpin-app').onclick = function() {
         renderUI();
     }
     hideAllCtx();
-}
+};
 
 function hideAllCtx() {
     let menus = ['app-context-menu','desktop-context-menu','drawer-ctx-menu','dock-ctx-menu'];
@@ -458,7 +461,7 @@ function populateDrawer() {
                 toggleAppDrawer();
             }
         };
-        d.oncontextmenu = function(e) { openDrawerCtx(e, this.dataset.id); }
+        d.oncontextmenu = function(e) { openDrawerCtx(e, this.dataset.id); };
         g.appendChild(d);
     }
 }
