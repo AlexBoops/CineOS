@@ -18,7 +18,7 @@ var APPS = {
     'RocketL': {title: 'Rocket League', path: 'script/Apps/RocketL/index.html', icon: 'https://ygo-assets-entities-us.yougov.net/87bb7a16-2b62-11e8-82b1-37bb0d207ced.jpg?zcw=518&zch=518&zct=10&zcl=0', pinned: false},
     'Xbox': {title: 'Xbox', path: 'script/Apps/Xbox/index.html', icon: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRknRQh-WRK4F75YB3EAlfrsqAk66Xjn45sBg&s', pinned: false},
 };
-
+const CDN_COVER = "https://cdn.jsdelivr.net/gh/AlexBoops/CineOS@main/";
 var savedPins = localStorage.getItem('c_pins_v2');
 if(savedPins) {
     let p = JSON.parse(savedPins);
