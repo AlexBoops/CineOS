@@ -1577,25 +1577,46 @@ window.CDN_HTML = CDN_HTML;
         }
 
         // REDESIGNED BOOTING SYSTEM -> NO BLOBS, ONLY ABOUT:BLANK DOCUMENT WRITES
-        async function runExe(g) {
+async function runExe(g) {
             popMsg("Booting Title...");
             try {
-                let txt = "";
-                if (g.htmlContent) { 
-                    txt = g.htmlContent; 
-                } 
-                else if (g.url) {
-                    const res = await fetch(g.url);
-                    if(!res.ok) throw new Error("fetch fail");
-                    txt = await res.text();
-                } else return;
-
                 activeWin = window.open('about:blank', '_blank');
                 if(!activeWin) { popMsg("Browser blocked popup.", "error"); return; }
 
-                activeWin.document.open();
-                activeWin.document.write(txt);
-                activeWin.document.close();
+                if (g.htmlContent) { 
+                    activeWin.document.open();
+                    activeWin.document.write(g.htmlContent);
+                    activeWin.document.close();
+                } else if (g.url) {
+                    if (g.url.includes("script.google.com")) {
+                        try {
+                            const res = await fetch(`https://corsproxy.io/?${encodeURIComponent(g.url)}`);
+                            if (!res.ok) throw new Error();
+                            const txt = await res.text();
+                            activeWin.document.open();
+                            activeWin.document.write(txt);
+                            activeWin.document.close();
+                        } catch(e) {
+                            activeWin.location.href = g.url;
+                        }
+                    } else if (g.url.endsWith(".html") || g.url.includes("cdn.jsdelivr.net") || g.url.includes("rawcdn.githack.com")) {
+                        try {
+                            const res = await fetch(g.url);
+                            if (!res.ok) throw new Error();
+                            const txt = await res.text();
+                            activeWin.document.open();
+                            activeWin.document.write(txt);
+                            activeWin.document.close();
+                        } catch(e) {
+                            activeWin.location.href = g.url;
+                        }
+                    } else {
+                        activeWin.location.href = g.url;
+                    }
+                } else {
+                    if(activeWin) activeWin.close();
+                    return;
+                }
 
                 document.getElementById('session-overlay').style.display = 'flex';
                 startT = Date.now();
@@ -1603,6 +1624,7 @@ window.CDN_HTML = CDN_HTML;
                 tInterval = setInterval(tickTime, 1000);
             } catch (err) {
                 console.error(err);
+                if (activeWin) activeWin.close();
                 popMsg("Connection error.", "error");
             }
         }
