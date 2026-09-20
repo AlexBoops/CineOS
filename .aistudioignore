@@ -1,0 +1,5 @@
+Videos/
+**/Videos/**
+*.mp4
+*.webm
+*.mov
